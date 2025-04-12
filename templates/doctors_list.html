@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Doctors in {{ city }} - CKD Prediction System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #57c5b6;
+            --accent: #159895;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-title h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .subtitle {
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .doctor-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .doctor-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .doctor-avatar {
+            font-size: 3rem;
+            color: var(--primary);
+            background: rgba(26, 95, 122, 0.1);
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .doctor-details {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .doctor-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0 0 0.3rem 0;
+        }
+        
+        .doctor-meta {
+            color: #64748b;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .doctor-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        
+        .appointment-form {
+            margin-top: 1rem;
+            background: #f8f9fa;
+            padding: 1.2rem;
+            border-radius: 8px;
+        }
+        
+        .form-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1.2rem;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 12px;
+            top: 14px;
+            color: var(--primary);
+            opacity: 0.7;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 0.9rem 0.9rem 0.9rem 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(26, 95, 122, 0.2);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(87, 197, 182, 0.2);
+            outline: none;
+        }
+        
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .book-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--success);
+            font-weight: 600;
+        }
+        
+        .book-btn:hover {
+            background: #25a25a;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1.5rem;
+            color: var(--primary);
+            font-weight: 500;
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--primary);
+            opacity: 0.8;
+        }
+        
+        .back-btn:hover {
+            background-color: rgba(26, 95, 122, 0.05);
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+        
+        .no-doctors {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .no-doctors i {
+            font-size: 3rem;
+            color: var(--danger);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .no-doctors p {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .doctor-card {
+                padding: 1.5rem;
+                width: 90%;
+            }
+            
+            .page-title {
+                width: 90%;
+            }
+            
+            .doctor-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .doctor-details {
+                text-align: center;
+            }
+            
+            .doctor-meta {
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-text">CKD Prediction System</div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h2><i class="fas fa-user-md"></i> Available Nephrologists in {{ city }}</h2>
+        <p class="subtitle">Schedule an appointment with a kidney specialist</p>
+    </div>
+
+    {% if doctors %}
+        {% for doc in doctors %}
+            <div class="doctor-card">
+                <div class="doctor-info">
+                    <div class="doctor-avatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="doctor-details">
+                        <h3 class="doctor-name">Dr. {{ doc[1] }}</h3>
+                        <div class="doctor-meta">
+                            <span><i class="fas fa-hospital"></i> {{ doc[2] }}</span>
+                            <span><i class="fas fa-phone"></i> {{ doc[3] }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="appointment-form" method="POST" action="/book_appointment">
+                    <div class="form-title">
+                        <i class="fas fa-calendar-check"></i> Schedule an Appointment
+                    </div>
+                    <input type="hidden" name="doctor_id" value="{{ doc[0] }}">
+                    <div class="input-group">
+                        <i class="fas fa-clipboard-list"></i>
+                        <input type="text" name="reason" placeholder="Reason for Appointment" required>
+                    </div>
+                    <button type="submit" class="btn book-btn">
+                        <i class="fas fa-calendar-plus"></i> Book Appointment
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-doctors">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>No nephrologists found in {{ city }}.</p>
+            <p>Please try searching in a different location or contact our support team for assistance.</p>
+        </div>
+    {% endif %}
+    
+    <a class="btn back-btn" href="/find_doctors">
+        <i class="fas fa-arrow-left"></i>
+        Back to Find Doctors
+    </a>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">
+            CKD Prediction System
+        </div>
+        <div class="footer-links">
+            <a href="/about"><i class="fa-solid fa-circle-info"></i> About</a>
+            <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+            <a href="/privacy"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+            <a href="/faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+        </div>
+    </div>
+    <div class="footer-copy">
+        © 2025 CKD Prediction System | All rights reserved
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Appointments</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f7f9fc, #eef2f7);
+            padding: 2rem;
+            margin: 0;
+            color: #444;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .header i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+            margin-right: 1rem;
+        }
+        h2 {
+            margin: 0;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            padding: 1.2rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #edf2f7;
+        }
+        th {
+            background: #3b82f6;
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover {
+            background-color: #f9fafb;
+        }
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+        .status.confirmed {
+            background-color: #dcfce7;
+            color: #16a34a;
+        }
+        .status.pending {
+            background-color: #fef9c3;
+            color: #ca8a04;
+        }
+        .status.cancelled {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        .status i {
+            margin-right: 4px;
+        }
+        .empty {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+        }
+        .empty i {
+            font-size: 3rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .back {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .back:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .back i {
+            margin-right: 8px;
+        }
+        .cell-with-icon {
+            display: flex;
+            align-items: center;
+        }
+        .cell-with-icon i {
+            margin-right: 10px;
+            color: #3b82f6;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+        .date-cell {
+            white-space: nowrap;
+        }
+    </style>
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="far fa-calendar-check"></i>
+            <h2>Your Appointments</h2>
+        </div>
+
+        <div class="card">
+            {% if appointments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user-md"></i> Doctor</th>
+                        <th><i class="fas fa-hospital"></i> Hospital</th>
+                        <th><i class="fas fa-phone"></i> Contact</th>
+                        <th><i class="far fa-calendar-alt"></i> Date</th>
+                        <th><i class="fas fa-clipboard-list"></i> Reason</th>
+                        <th><i class="fas fa-info-circle"></i> Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appt in appointments %}
+                    <tr>
+                        <td class="cell-with-icon">
+                            <i class="fas fa-user-md"></i>
+                            {{ appt[0] }}
+                        </td>
+                        <td class="cell-with-icon">
+                            <i class="fas fa-hospital"></i>
+                            {{ appt[1] }}
+                        </td>
+                        <td class="cell-with-icon">
+                            <i class="fas fa-phone"></i>
+                            {{ appt[2] }}
+                        </td>
+                        <td class="date-cell cell-with-icon">
+                            <i class="far fa-calendar-alt"></i>
+                            {{ appt[3] }}
+                        </td>
+                        <td class="cell-with-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                            {{ appt[4] }}
+                        </td>
+                        <td>
+                            {% if appt[5] == 'Confirmed' %}
+                                <span class="status confirmed">
+                                    <i class="fas fa-check-circle"></i> Confirmed
+                                </span>
+                            {% elif appt[5] == 'Pending' %}
+                                <span class="status pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            {% elif appt[5] == 'Cancelled' %}
+                                <span class="status cancelled">
+                                    <i class="fas fa-times-circle"></i> Cancelled
+                                </span>
+                            {% else %}
+                                {{ appt[5] }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty">
+                <i class="far fa-calendar-times"></i>
+                <p>No appointments found. Schedule your first appointment today.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <a href="/home" class="back">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+</body>
+</html>

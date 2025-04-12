@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CKD Prediction Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --secondary: #57c5b6;
+            --accent: #159895;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-title h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .subtitle {
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 2rem;
+        }
+        
+        .form-section {
+            background-color: rgba(240, 244, 248, 0.5);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(26, 95, 122, 0.1);
+        }
+        
+        .form-section-title {
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            gap: 0.5rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #334155;
+            font-size: 0.9rem;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 40px;
+            color: var(--primary);
+            opacity: 0.7;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.8rem 0.8rem 0.8rem 2.2rem;
+            border: 1px solid rgba(26, 95, 122, 0.2);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(87, 197, 182, 0.2);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50px;
+            margin-top: 1.5rem;
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            color: var(--primary);
+            font-weight: 500;
+            padding: 0.6rem 1rem;
+            background: transparent;
+            border: 1px solid var(--primary);
+            opacity: 0.8;
+        }
+        
+        .back-btn:hover {
+            background-color: rgba(26, 95, 122, 0.05);
+            opacity: 1;
+        }
+        
+        .info-text {
+            margin-top: 1rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-copy {
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-text">CKD Prediction System</div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h2><i class="fa-solid fa-kidneys"></i> CKD Prediction Tool</h2>
+        <p class="subtitle">Enter your health details for kidney disease risk assessment</p>
+    </div>
+
+    <div class="form-container">
+        <form action="/predict" method="POST">
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fas fa-user"></i>
+                    <span>Basic Information</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <i class="fas fa-birthday-cake input-icon"></i>
+                        <input type="number" name="age" id="age" value="50" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bp">Blood Pressure (mm Hg):</label>
+                        <i class="fas fa-heartbeat input-icon"></i>
+                        <input type="number" name="bp" id="bp" value="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Select Gender:</label>
+                        <i class="fas fa-venus-mars input-icon"></i>
+                        <select name="gender" id="gender" required>
+                            <option value="1" selected>Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fas fa-flask"></i>
+                    <span>Urine Test Results</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="sg">Specific Gravity:</label>
+                        <i class="fas fa-tint input-icon"></i>
+                        <input type="text" name="sg" id="sg" value="1.005" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="al">Albumin:</label>
+                        <i class="fas fa-vial input-icon"></i>
+                        <input type="number" name="al" id="al" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="su">Sugar:</label>
+                        <i class="fas fa-candy-cane input-icon"></i>
+                        <input type="number" name="su" id="su" value="3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rbc">Red Blood Cells:</label>
+                        <i class="fas fa-tint input-icon"></i>
+                        <select name="rbc" id="rbc" required>
+                            <option value="1" selected>Normal</option>
+                            <option value="0">Abnormal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pc">Pus Cell:</label>
+                        <i class="fas fa-bacteria input-icon"></i>
+                        <select name="pc" id="pc" required>
+                            <option value="1" selected>Normal</option>
+                            <option value="0">Abnormal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pcc">Pus Cell Clumps:</label>
+                        <i class="fas fa-layer-group input-icon"></i>
+                        <select name="pcc" id="pcc" required>
+                            <option value="0" selected>Not Present</option>
+                            <option value="1">Present</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ba">Bacteria:</label>
+                        <i class="fas fa-bug input-icon"></i>
+                        <select name="ba" id="ba" required>
+                            <option value="0" selected>Not Present</option>
+                            <option value="1">Present</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fas fa-vial"></i>
+                    <span>Blood Test Results</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bgr">Blood Glucose Random (mg/dl):</label>
+                        <i class="fas fa-chart-line input-icon"></i>
+                        <input type="number" name="bgr" id="bgr" value="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bu">Blood Urea (mg/dl):</label>
+                        <i class="fas fa-vials input-icon"></i>
+                        <input type="number" name="bu" id="bu" value="40" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sc">Serum Creatinine (mg/dl):</label>
+                        <i class="fas fa-flask input-icon"></i>
+                        <input type="number" step="0.01" name="sc" id="sc" value="1.90" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sod">Sodium (mEq/L):</label>
+                        <i class="fas fa-atom input-icon"></i>
+                        <input type="number" name="sod" id="sod" value="140" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pot">Potassium (mEq/L):</label>
+                        <i class="fas fa-atom input-icon"></i>
+                        <input type="number" name="pot" id="pot" value="4.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hemo">Hemoglobin (g/dl):</label>
+                        <i class="fas fa-tint input-icon"></i>
+                        <input type="number" step="0.1" name="hemo" id="hemo" value="15.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pcv">Packed Cell Volume:</label>
+                        <i class="fas fa-percentage input-icon"></i>
+                        <input type="number" name="pcv" id="pcv" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wc">White Blood Cell Count (cells/cumm):</label>
+                        <i class="fas fa-shield-virus input-icon"></i>
+                        <input type="number" name="wc" id="wc" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rc">Red Blood Cell Count (millions/cmm):</label>
+                        <i class="fas fa-tint input-icon"></i>
+                        <input type="number" step="0.01" name="rc" id="rc" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="egfr">eGFR:</label>
+                        <i class="fas fa-calculator input-icon"></i>
+                        <input type="number" step="0.1" name="egfr" id="egfr" value="15.0" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i class="fas fa-notes-medical"></i>
+                    <span>Medical History & Symptoms</span>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="htn">Hypertension:</label>
+                        <i class="fas fa-heartbeat input-icon"></i>
+                        <select name="htn" id="htn" required>
+                            <option value="0" selected>No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dm">Diabetes Mellitus:</label>
+                        <i class="fas fa-syringe input-icon"></i>
+                        <select name="dm" id="dm" required>
+                            <option value="0" selected>No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cad">Coronary Artery Disease:</label>
+                        <i class="fas fa-heart input-icon"></i>
+                        <select name="cad" id="cad" required>
+                            <option value="0" selected>No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appet">Appetite:</label>
+                        <i class="fas fa-utensils input-icon"></i>
+                        <select name="appet" id="appet" required>
+                            <option value="0" selected>Good</option>
+                            <option value="1">Poor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pe">Pedal Edema:</label>
+                        <i class="fas fa-shoe-prints input-icon"></i>
+                        <select name="pe" id="pe" required>
+                            <option value="0" selected>No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ane">Anemia:</label>
+                        <i class="fas fa-low-vision input-icon"></i>
+                        <select name="ane" id="ane" required>
+                            <option value="0" selected>No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn submit-btn">
+                <i class="fas fa-calculator"></i> Predict CKD Stage
+            </button>
+            
+            <p class="info-text">
+                <i class="fas fa-info-circle"></i> This tool provides an estimate based on your inputs. Always consult with a healthcare professional for proper diagnosis.
+            </p>
+        </form>
+        
+        <a href="/home" class="btn back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-logo">
+            CKD Prediction System
+        </div>
+        <div class="footer-links">
+            <a href="/about"><i class="fa-solid fa-circle-info"></i> About</a>
+            <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+            <a href="/privacy"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+            <a href="/faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+        </div>
+    </div>
+    <div class="footer-copy">
+        © 2025 CKD Prediction System | All rights reserved
+    </div>
+</footer>
+
+</body>
+</html>
